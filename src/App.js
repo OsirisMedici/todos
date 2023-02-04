@@ -2,9 +2,35 @@ import './App.css';
 import  Header from "./components/Header";
 import  Todos from "./components/Todos";
 import  Footer from "./components/Footer";
+import  AddTodo from "./components/AddTodo";
+import react, {useState} from 'react';
 
 function App() {
-  let todos = [
+
+  
+
+  const onDelete = (todo)=> {
+    console.log("I am onDelete function", todo) ;
+    
+    setTodos(todos.filter ((e)=>{
+      return e!==todo;
+    }));
+  }
+
+  const addTodo = (title, desc) => {
+    console.log("This is a Add Todo Function", title, desc)
+    let sno = todos [todos.length - 1].sno + 1;
+    const myTodo = {
+      sno : sno,
+      title : title,
+      desc : desc,
+    }
+
+    setTodos ([...todos, myTodo]);
+    console.log(myTodo);
+  }
+
+  const [todos, setTodos] = useState ([
     {
       sno:1,
       title: "dare gym karennn",
@@ -20,11 +46,13 @@ function App() {
       title: "College jana hai",
       des: "Intrest kisko hai mujhe toh attendence ke marks chahiye"
     },
-  ]
+  ]);
+
   return (
      <>
      <Header/>
-     <Todos todos={todos}/>
+     <AddTodo addTodo={addTodo}/>
+     <Todos todos={todos} onDelete={onDelete}/>
      <Footer/>
      </>
   );
